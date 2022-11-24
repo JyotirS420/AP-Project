@@ -2,6 +2,7 @@ package Screens;
 //package com.mygdx.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -134,6 +135,9 @@ public class MainMenuScreen implements Screen {
         loadgamebuttonImg = new Texture("LoadGameButton.png");
         quitgamebuttonImg = new Texture("QuitGameButton.png");
         skygradientImg = new Texture("SkyGradient1.png");
+        Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Storm - AShamaluevMusic.mp3"));
+        menuMusic.setLooping(true);
+        menuMusic.play();
     }
 
     @Override

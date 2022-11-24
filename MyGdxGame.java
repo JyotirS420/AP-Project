@@ -4,10 +4,7 @@ import Screens.InGameScreen;
 import Screens.MainMenuScreen;
 import Screens.PauseInGameScreen;
 import Screens.TankSelectionScreen;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -16,6 +13,34 @@ public class MyGdxGame extends Game {
 	public SpriteBatch batch;
 
 
+	public MyGdxGame() {
+		super();
+	}
+
+	@Override
+	public void pause() {
+		super.pause();
+	}
+
+	@Override
+	public void resume() {
+		super.resume();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+	}
+
+	@Override
+	public void setScreen(Screen screen) {
+		super.setScreen(screen);
+	}
+
+	@Override
+	public Screen getScreen() {
+		return super.getScreen();
+	}
 
 	@Override
 	public void create () {
