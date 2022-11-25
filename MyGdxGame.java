@@ -7,14 +7,21 @@ import Screens.TankSelectionScreen;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MyGdxGame extends Game {
 	public SpriteBatch batch;
+	private Stage stage;
+	private Game game;
 
+	//constructor
+//	public MyGdxGame(Game game) {
+//		this.game = game;
+//	}
 
 	public MyGdxGame() {
-		super();
+		game = this;
 	}
 
 	@Override
@@ -45,9 +52,10 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new MainMenuScreen(this));
+		//stage.addActor(new MainMenuScreen(this));
+		//setScreen(new MainMenuScreen(game));
+		setScreen(new TankSelectionScreen(this));
 		//setScreen(new InGameScreen(this));
-		//setScreen(new TankSelectionScreen(this));
 		//setScreen(new PauseInGameScreen(this));
 	}
 
