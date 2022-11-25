@@ -2,28 +2,17 @@ package Screens;
 //package com.mygdx.game;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.*;
-import com.mygdx.game.MyGdxGame;
 
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.SimpleButton;
 
 
 public class MainMenuScreen implements Screen {
@@ -35,13 +24,13 @@ public class MainMenuScreen implements Screen {
     private ImageButton button;
     int flag = 0;
     private Label outputLabel;
-    private Sound bulletSound = Gdx.audio.newSound(Gdx.files.internal("bulletSound.mp3"));
-    Texture img, abramImg, groundImg1,groundImg2, getGroundImg3, logoImg, backgroundpurpleImg, backgroundmaroonImg, bulletImg, mainmenuImg,skygradientImg;
-    Texture newgamebuttonImg, loadgamebuttonImg, quitgamebuttonImg;
+    private Sound bulletSound = Gdx.audio.newSound(Gdx.files.internal("Audio/bulletSound.mp3"));
+    Texture img, abramImg, groundImg1,groundImg2, groundImg3, logoImg, backGroundPurpleImg, backgroundImg, bulletImg, mainMenuImg, sideMenuImg;
+    Texture newGameButtonImg, loadGameButtonImg, quitGameButtonImg;
 
 
-    Sprite abramSprite, groundSprite1, groundSprite2, groundSprite3, logoSprite, backgroundpurpleSprite, backgroundmaroonSprite, bulletSprite, mainmenuSprite,skygradientSprite;
-    Sprite newgamebuttonSprite, loadgamebuttonSprite, quitgamebuttonSprite;
+    Sprite abramSprite, groundSprite1, groundSprite2, groundSprite3, logoSprite, backgroundPurpleSprite, backgroundSprite, bulletSprite, mainMenuSprite, sideMenuSprite;
+    Sprite newGameButtonSprite, loadGameButtonSprite, quitGameButtonSprite;
     SpriteBatch batch = new SpriteBatch();
 
     //add a button
@@ -55,7 +44,7 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(Game game) {
         this.game = game;
     }
-    float x=60, y=60;
+
     float xAbram = 10; float yAbram = 18;
     float xGround1 = 0;float yGround1 = -10;
     float xGround2 = 100;float yGround2 = -10;
@@ -155,23 +144,19 @@ public class MainMenuScreen implements Screen {
 //        });
 
 
-        abramImg = new Texture("Abrams_nobg.png");
+        abramImg = new Texture("Tanks/Abrams_nobg.png");
         groundImg1 = new Texture("Ground.jpg");
         groundImg2 = new Texture("Ground.jpg");
-        getGroundImg3 = new Texture("Ground.jpg");
+        groundImg3 = new Texture("Ground.jpg");
         logoImg = new Texture("Tank_Stars_Logo_nobg.png");
-        backgroundpurpleImg = new Texture("Purplebg1.jpeg");
-        //backgroundmaroonImg = new Texture("Maroonbg.jpeg");
-        //backgroundmaroonImg = new Texture("Forest2.png");
-        //backgroundmaroonImg = new Texture("Mountain.png");
-        backgroundmaroonImg = new Texture("M1.jpeg");
-        bulletImg = new Texture("bullet.png");
-        mainmenuImg = new Texture("MainMenu.png");
-        newgamebuttonImg = new Texture("NewGameButton1.png");
-        loadgamebuttonImg = new Texture("LoadGameButton1.png");
-        quitgamebuttonImg = new Texture("QuitGameButton1.png");
-        //skygradientImg = new Texture("ForestPath1.png");
-        skygradientImg = new Texture("2.png");
+        backGroundPurpleImg = new Texture("PurpleBackgrounds/Purplebg1.jpeg");
+        backgroundImg = new Texture("Backgrounds/M1.jpeg");
+        bulletImg = new Texture("Bullets/bullet.png");
+        mainMenuImg = new Texture("Text/MainMenu.png");
+        newGameButtonImg = new Texture("Buttons/NewGameButton1.png");
+        loadGameButtonImg = new Texture("Buttons/LoadGameButton1.png");
+        quitGameButtonImg = new Texture("Buttons/QuitGameButton1.png");
+        sideMenuImg = new Texture("Backgrounds/SideMenu.png");
 
         abramSprite = new Sprite(abramImg);
         abramSprite.setSize(340,340);
@@ -185,7 +170,7 @@ public class MainMenuScreen implements Screen {
         groundSprite2.setSize(200,120);
         groundSprite2.setPosition(xGround2,yGround2);
 
-        groundSprite3 = new Sprite(getGroundImg3);
+        groundSprite3 = new Sprite(groundImg3);
         groundSprite3.setSize(200,120);
         groundSprite3.setPosition(xGround3,yGround3);
 
@@ -193,38 +178,38 @@ public class MainMenuScreen implements Screen {
         logoSprite.setSize(200,200);
         logoSprite.setPosition(xLogo,yLogo);
 
-        backgroundpurpleSprite = new Sprite(backgroundpurpleImg);
-        backgroundpurpleSprite.setSize(800,600);
-        backgroundpurpleSprite.setPosition(xPurpleBackground,yPurpleBackground);
+        backgroundPurpleSprite = new Sprite(backGroundPurpleImg);
+        backgroundPurpleSprite.setSize(800,600);
+        backgroundPurpleSprite.setPosition(xPurpleBackground,yPurpleBackground);
 
-        backgroundmaroonSprite = new Sprite(backgroundmaroonImg);
-        backgroundmaroonSprite.setSize(800,600);
-        backgroundmaroonSprite.setPosition(xMaroonBackground,yMaroonBackground);
+        backgroundSprite = new Sprite(backgroundImg);
+        backgroundSprite.setSize(800,600);
+        backgroundSprite.setPosition(xMaroonBackground,yMaroonBackground);
 
         bulletSprite = new Sprite(bulletImg);
         bulletSprite.setSize(50,35);
 
 
-        mainmenuSprite = new Sprite(mainmenuImg);
-        mainmenuSprite.setSize(150,125);
-        mainmenuSprite.setPosition(xMainmenu,yMainmenu);
+        mainMenuSprite = new Sprite(mainMenuImg);
+        mainMenuSprite.setSize(150,125);
+        mainMenuSprite.setPosition(xMainmenu,yMainmenu);
 
-        newgamebuttonSprite = new Sprite(newgamebuttonImg);
-        newgamebuttonSprite.setSize(135,60);
-        newgamebuttonSprite.setPosition(xNewgame,yNewgame);
+        newGameButtonSprite = new Sprite(newGameButtonImg);
+        newGameButtonSprite.setSize(135,60);
+        newGameButtonSprite.setPosition(xNewgame,yNewgame);
 
-        loadgamebuttonSprite = new Sprite(loadgamebuttonImg);
-        loadgamebuttonSprite.setSize(135,60);
-        loadgamebuttonSprite.setPosition(xLoadgame,yLoadgame);
+        loadGameButtonSprite = new Sprite(loadGameButtonImg);
+        loadGameButtonSprite.setSize(135,60);
+        loadGameButtonSprite.setPosition(xLoadgame,yLoadgame);
 
-        quitgamebuttonSprite = new Sprite(quitgamebuttonImg);
-        quitgamebuttonSprite.setSize(135,55);
-        quitgamebuttonSprite.setPosition(xQuitgame,yQuitgame);
+        quitGameButtonSprite = new Sprite(quitGameButtonImg);
+        quitGameButtonSprite.setSize(135,55);
+        quitGameButtonSprite.setPosition(xQuitgame,yQuitgame);
 
-        skygradientSprite = new Sprite(skygradientImg);
-        skygradientSprite.setSize(250,600);
+        sideMenuSprite = new Sprite(sideMenuImg);
+        sideMenuSprite.setSize(250,600);
         //skygradientSprite.setSize(250,600);
-        skygradientSprite.setPosition(xSkygradient,ySkygradient);
+        sideMenuSprite.setPosition(xSkygradient,ySkygradient);
 
 
         //if (Gdx.input.isTouched())  then change to TankSelectScreen
@@ -274,17 +259,15 @@ public class MainMenuScreen implements Screen {
 //        Gdx.gl.glClearColor(1, 1, 1, 1);
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //ScreenUtils.clear(Color.PURPLE);
         ScreenUtils.clear(0, 0, 0, 1);
-        //set screen background as a texture
 
         //stage.addActor(new Image(backgroundImg));
         batch.begin();
         //game.batch.draw(backgroundpurpleImg, xPurpleBackground, yPurpleBackground);
 
-        backgroundpurpleSprite.draw(batch);
-        backgroundmaroonSprite.draw(batch);
-        skygradientSprite.draw(batch);
+        backgroundPurpleSprite.draw(batch);
+        backgroundSprite.draw(batch);
+        sideMenuSprite.draw(batch);
         abramSprite.draw(batch);
         groundSprite1.draw(batch);
         groundSprite2.draw(batch);
@@ -292,10 +275,10 @@ public class MainMenuScreen implements Screen {
         logoSprite.draw(batch);
 
         bulletSprite.draw(batch);
-        mainmenuSprite.draw(batch);
-        newgamebuttonSprite.draw(batch);
-        loadgamebuttonSprite.draw(batch);
-        quitgamebuttonSprite.draw(batch);
+        mainMenuSprite.draw(batch);
+        newGameButtonSprite.draw(batch);
+        loadGameButtonSprite.draw(batch);
+        quitGameButtonSprite.draw(batch);
 
 
 
@@ -315,8 +298,8 @@ public class MainMenuScreen implements Screen {
 //        game.batch.draw(quitgamebuttonImg, xQuitgame, yQuitgame);
 //        game.batch.draw(bulletImg, xBullet, yBullet);
 
-        //make the bullet disappear after 1 second
 
+        //make the bullet disappear after 1 second
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             if(xBullet==325){
                 flag = 1;
@@ -324,8 +307,6 @@ public class MainMenuScreen implements Screen {
                 bulletSound.setPitch(id, 1);
                 bulletSound.setLooping(id, false);
             }
-
-            //xBullet = 325;
         }
 
         if(flag==1) {
@@ -339,9 +320,6 @@ public class MainMenuScreen implements Screen {
         bulletSprite.setPosition(xBullet,yBullet);
 
         batch.end();
-
-
-
 
 
 
@@ -375,16 +353,16 @@ public class MainMenuScreen implements Screen {
         abramImg.dispose();
         groundImg1.dispose();
         groundImg2.dispose();
-        getGroundImg3.dispose();
+        groundImg3.dispose();
         logoImg.dispose();
-        backgroundpurpleImg.dispose();
-        backgroundmaroonImg.dispose();
+        backGroundPurpleImg.dispose();
+        backgroundImg.dispose();
         bulletImg.dispose();
-        mainmenuImg.dispose();
-        newgamebuttonImg.dispose();
-        loadgamebuttonImg.dispose();
-        quitgamebuttonImg.dispose();
-        skygradientImg.dispose();
+        mainMenuImg.dispose();
+        newGameButtonImg.dispose();
+        loadGameButtonImg.dispose();
+        quitGameButtonImg.dispose();
+        sideMenuImg.dispose();
         bulletSound.dispose();
         //stage.dispose();
         batch.dispose();

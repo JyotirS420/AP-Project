@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.MyGdxGame;
 
 
 import com.badlogic.gdx.Gdx;
@@ -20,21 +19,20 @@ public class TankSelectionScreen implements Screen {
 
     private Stage stage;
     private Label outputLabel;
-    private Sound bulletSound = Gdx.audio.newSound(Gdx.files.internal("bulletSound.mp3"));
-    Texture img, coalitionImg, groundImg1,groundImg2, getGroundImg3, groundImg4, logoImg, backgroundpurpleImg, backgroundmaroonImg, chooseyourtankImg, coalitiontextImg, skygradientImg;
-    Texture gobuttonImg, backbuttonImg, leftarrowImg, rightarrowImg;
+    Texture img, coalitionImg, groundImg1,groundImg2, groundImg3, groundImg4, logoImg, backgroundPurpleImg, backgroundImg, chooseYourTankImg, coalitionTextImg, sideMenuImg;
+    Texture goButtonImg, backButtonImg, leftArrowImg, rightArrowImg;
     private Game game;
 
     //create a batch
     SpriteBatch batch = new SpriteBatch();
 
-    Sprite coalitionSprite, groundSprite1, groundSprite2, groundSprite3, groundSprite4, logoSprite, backgroundpurpleSprite, backgroundmaroonSprite, chooseyourtankSprite, coalitiontextSprite, skygradientSprite;
-    Sprite gobuttonSprite, backbuttonSprite, leftarrowSprite, rightarrowSprite;
+    Sprite coalitionSprite, groundSprite1, groundSprite2, groundSprite3, groundSprite4, logoSprite, backgroundPurpleSprite, backgroundSprite, chooseYourTankSprite, coalitionTextSprite, sideMenuSprite;
+    Sprite goButtonSprite, backButtonSprite, leftArrowSprite, rightArrowSprite;
 
     public TankSelectionScreen(Game game) {
         this.game = game;
     }
-    float x=60, y=60;
+
     float xCoalition = 15; float yCoalition = 10;
     //float xCoaltionText = 40; float yCoalitionText = 300;
     float xCoaltionText = -15; float yCoalitionText = 202;
@@ -60,25 +58,21 @@ public class TankSelectionScreen implements Screen {
     @Override
     public void show() {
 
-        //img = new Texture("badlogic.jpg");
-        coalitionImg = new Texture("CoalitionNew.png");
+        coalitionImg = new Texture("Tanks/CoalitionNew.png");
         groundImg1 = new Texture("Ground.jpg");
         groundImg2 = new Texture("Ground.jpg");
-        getGroundImg3 = new Texture("Ground.jpg");
+        groundImg3 = new Texture("Ground.jpg");
         groundImg4 = new Texture("Ground.jpg");
         logoImg = new Texture("Tank_Stars_Logo_nobg.png");
-        backgroundpurpleImg = new Texture("Purplebg1.jpeg");
-        //backgroundmaroonImg = new Texture("Maroonbg.jpeg");
-        //backgroundmaroonImg = new Texture("Mountain.png");
-        backgroundmaroonImg = new Texture("M1.jpeg");
-        chooseyourtankImg = new Texture("SelectYourTankText.png");
-        coalitiontextImg = new Texture("CoalitionText1.png");
-        gobuttonImg = new Texture("GoButton1.png");
-        backbuttonImg = new Texture("BackButton1.png");
-        leftarrowImg = new Texture("LArrow.png");
-        rightarrowImg = new Texture("RArrow.png");
-        //skygradientImg = new Texture("SkyGradient1.png");
-        skygradientImg = new Texture("2.png");
+        backgroundPurpleImg = new Texture("PurpleBackgrounds/Purplebg1.jpeg");
+        backgroundImg = new Texture("Backgrounds/M1.jpeg");
+        chooseYourTankImg = new Texture("Text/SelectYourTankText.png");
+        coalitionTextImg = new Texture("Text/CoalitionText1.png");
+        goButtonImg = new Texture("Buttons/GoButton1.png");
+        backButtonImg = new Texture("Buttons/BackButton1.png");
+        leftArrowImg = new Texture("InGameStuff/LArrow.png");
+        rightArrowImg = new Texture("InGameStuff/RArrow.png");
+        sideMenuImg = new Texture("Backgrounds/SideMenu.png");
 
         coalitionSprite = new Sprite(coalitionImg);
         coalitionSprite.setSize(350, 350);
@@ -92,7 +86,7 @@ public class TankSelectionScreen implements Screen {
         groundSprite2.setSize(100, 120);
         groundSprite2.setPosition(xGround2, yGround2);
 
-        groundSprite3 = new Sprite(getGroundImg3);
+        groundSprite3 = new Sprite(groundImg3);
         groundSprite3.setSize(100, 120);
         groundSprite3.setPosition(xGround3, yGround3);
 
@@ -104,41 +98,41 @@ public class TankSelectionScreen implements Screen {
         logoSprite.setSize(140, 140);
         logoSprite.setPosition(xLogo, yLogo);
 
-        backgroundpurpleSprite = new Sprite(backgroundpurpleImg);
-        backgroundpurpleSprite.setSize(800, 600);
-        backgroundpurpleSprite.setPosition(xPurpleBackground, yPurpleBackground);
+        backgroundPurpleSprite = new Sprite(backgroundPurpleImg);
+        backgroundPurpleSprite.setSize(800, 600);
+        backgroundPurpleSprite.setPosition(xPurpleBackground, yPurpleBackground);
 
-        backgroundmaroonSprite = new Sprite(backgroundmaroonImg);
-        backgroundmaroonSprite.setSize(800, 600);
-        backgroundmaroonSprite.setPosition(xMaroonBackground, yMaroonBackground);
+        backgroundSprite = new Sprite(backgroundImg);
+        backgroundSprite.setSize(800, 600);
+        backgroundSprite.setPosition(xMaroonBackground, yMaroonBackground);
 
-        chooseyourtankSprite = new Sprite(chooseyourtankImg);
-        chooseyourtankSprite.setSize(175, 150);
-        chooseyourtankSprite.setPosition(xchooseyourtank, ychooseyourtank);
+        chooseYourTankSprite = new Sprite(chooseYourTankImg);
+        chooseYourTankSprite.setSize(175, 150);
+        chooseYourTankSprite.setPosition(xchooseyourtank, ychooseyourtank);
 
-        coalitiontextSprite = new Sprite(coalitiontextImg);
-        coalitiontextSprite.setSize(400, 200);
-        coalitiontextSprite.setPosition(xCoaltionText, yCoalitionText);
+        coalitionTextSprite = new Sprite(coalitionTextImg);
+        coalitionTextSprite.setSize(400, 200);
+        coalitionTextSprite.setPosition(xCoaltionText, yCoalitionText);
 
-        gobuttonSprite = new Sprite(gobuttonImg);
-        gobuttonSprite.setSize(135, 60);
-        gobuttonSprite.setPosition(xGo, yGo);
+        goButtonSprite = new Sprite(goButtonImg);
+        goButtonSprite.setSize(135, 60);
+        goButtonSprite.setPosition(xGo, yGo);
 
-        backbuttonSprite = new Sprite(backbuttonImg);
-        backbuttonSprite.setSize(135, 60);
-        backbuttonSprite.setPosition(xBack, yBack);
+        backButtonSprite = new Sprite(backButtonImg);
+        backButtonSprite.setSize(135, 60);
+        backButtonSprite.setPosition(xBack, yBack);
 
-        leftarrowSprite = new Sprite(leftarrowImg);
-        leftarrowSprite.setSize(25, 25);
-        leftarrowSprite.setPosition(xLeftArrow, yLeftArrow);
+        leftArrowSprite = new Sprite(leftArrowImg);
+        leftArrowSprite.setSize(25, 25);
+        leftArrowSprite.setPosition(xLeftArrow, yLeftArrow);
 
-        rightarrowSprite = new Sprite(rightarrowImg);
-        rightarrowSprite.setSize(25, 25);
-        rightarrowSprite.setPosition(xRightArrow, yRightArrow);
+        rightArrowSprite = new Sprite(rightArrowImg);
+        rightArrowSprite.setSize(25, 25);
+        rightArrowSprite.setPosition(xRightArrow, yRightArrow);
 
-        skygradientSprite = new Sprite(skygradientImg);
-        skygradientSprite.setSize(250, 600);
-        skygradientSprite.setPosition(xSkygradient, ySkygradient);
+        sideMenuSprite = new Sprite(sideMenuImg);
+        sideMenuSprite.setSize(250, 600);
+        sideMenuSprite.setPosition(xSkygradient, ySkygradient);
 
     }
 
@@ -159,21 +153,21 @@ public class TankSelectionScreen implements Screen {
         //stage.addActor(new Image(backgroundImg));
         batch.begin();
 
-        backgroundpurpleSprite.draw(batch);
-        backgroundmaroonSprite.draw(batch);
-        skygradientSprite.draw(batch);
+        backgroundPurpleSprite.draw(batch);
+        backgroundSprite.draw(batch);
+        sideMenuSprite.draw(batch);
         groundSprite1.draw(batch);
         groundSprite2.draw(batch);
         groundSprite3.draw(batch);
         groundSprite4.draw(batch);
         coalitionSprite.draw(batch);
         logoSprite.draw(batch);
-        chooseyourtankSprite.draw(batch);
-        coalitiontextSprite.draw(batch);
-        gobuttonSprite.draw(batch);
-        backbuttonSprite.draw(batch);
-        leftarrowSprite.draw(batch);
-        rightarrowSprite.draw(batch);
+        chooseYourTankSprite.draw(batch);
+        coalitionTextSprite.draw(batch);
+        goButtonSprite.draw(batch);
+        backButtonSprite.draw(batch);
+        leftArrowSprite.draw(batch);
+        rightArrowSprite.draw(batch);
 
 
 
@@ -226,9 +220,18 @@ public class TankSelectionScreen implements Screen {
         coalitionImg.dispose();
         groundImg1.dispose();
         groundImg2.dispose();
-        getGroundImg3.dispose();
+        groundImg3.dispose();
         logoImg.dispose();
-        backgroundpurpleImg.dispose();
-        backgroundmaroonImg.dispose();
+        backgroundPurpleImg.dispose();
+        backgroundImg.dispose();
+        chooseYourTankImg.dispose();
+        coalitionTextImg.dispose();
+        goButtonImg.dispose();
+        backButtonImg.dispose();
+        leftArrowImg.dispose();
+        rightArrowImg.dispose();
+        sideMenuImg.dispose();
+        batch.dispose();
+
     }
 }

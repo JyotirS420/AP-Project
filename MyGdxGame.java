@@ -53,10 +53,11 @@ public class MyGdxGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		//stage.addActor(new MainMenuScreen(this));
+
 		//setScreen(new MainMenuScreen(game));
-		setScreen(new TankSelectionScreen(this));
+		//setScreen(new TankSelectionScreen(this));
 		//setScreen(new InGameScreen(this));
-		//setScreen(new PauseInGameScreen(this));
+		setScreen(new PauseInGameScreen(this));
 	}
 
 	@Override

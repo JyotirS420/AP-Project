@@ -2,27 +2,16 @@ package Screens;
 //package com.mygdx.game;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.MyGdxGame;
 
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
@@ -32,17 +21,17 @@ public class InGameScreen implements Screen {
     private Label outputLabel;
     Texture img, abramImg, spectreImg;
     Texture groundImg1,groundImg2, groundImg3, groundImg4, groundImg5, groundImg6;
-    Texture logoImg, backgroundpurpleImg, backgroundmaroonImg;
-    Texture player1healthbarImg, player2healthbarImg, player1fuelbarImg, player2fuelbarImg, player1aimarrowImg, player2aimarrowImg;
-    Texture player1healthtextImg, player2healthtextImg, player1fueltextImg, player2fueltextImg,pausebuttonImg, translucentbgImg;;
+    Texture logoImg, backgroundPurpleImg, backgroundImg;
+    Texture player1HealthBarImg, player2HealthBarImg, player1FuelBarImg, player2FuelBarImg, player1AimArrowImg, player2aimarrowImg;
+    Texture player1HealthTextImg, player2HealthTextImg, player1FuelTextImg, player2FuelTextImg, pauseButtonImg;
     MyGdxGame game;
 
     SpriteBatch batch;
     //make sprites for the images
     Sprite abramSprite, spectreSprite, groundSprite1, groundSprite2, groundSprite3, groundSprite4, groundSprite5, groundSprite6;
-    Sprite logoSprite, backgroundpurpleSprite, backgroundmaroonSprite;
-    Sprite player1healthbarSprite, player2healthbarSprite, player1fuelbarSprite, player2fuelbarSprite, player1aimarrowSprite, player2aimarrowSprite;
-    Sprite player1healthtextSprite, player2healthtextSprite, player1fueltextSprite, player2fueltextSprite, pausebuttonSprite, translucentbgSprite;
+    Sprite logoSprite, backgroundPurpleSprite, backgroundSprite;
+    Sprite player1HealthBarSprite, player2HealthBarSprite, player1FuelBarSprite, player2FuelBarSprite, player1AimarrowSprite, player2AimarrowSprite;
+    Sprite player1HealthTextSprite, player2HealthTextSprite, player1FuelTextSprite, player2FuelTextSprite, pauseButtonSprite;
     //make a camera
     OrthographicCamera camera;
     //make a viewport
@@ -54,7 +43,7 @@ public class InGameScreen implements Screen {
     public InGameScreen(MyGdxGame game) {
         this.game = game;
     }
-    float x=60, y=60;
+
     float xAbram = 20; float yAbram = 100;
     float xSpectre = 550; float ySpectre = 115;
     float xGround1 = 0;float yGround1 = -10;
@@ -87,10 +76,8 @@ public class InGameScreen implements Screen {
     @Override
     public void show() {
 
-
-        //img = new Texture("badlogic.jpg");
-        abramImg = new Texture("Abrams_nobg.png");
-        spectreImg = new Texture("Spectre_rev_nobg.png");
+        abramImg = new Texture("Tanks/Abrams_nobg.png");
+        spectreImg = new Texture("Tanks/Spectre_rev_nobg.png");
         groundImg1 = new Texture("Ground.jpg");
         groundImg2 = new Texture("Ground.jpg");
         groundImg3 = new Texture("Ground.jpg");
@@ -98,21 +85,19 @@ public class InGameScreen implements Screen {
         groundImg5 = new Texture("Ground.jpg");
         groundImg6 = new Texture("Ground.jpg");
         logoImg = new Texture("Tank_Stars_Logo_nobg.png");
-        backgroundpurpleImg = new Texture("Purplebg1.jpeg");
-        //backgroundmaroonImg = new Texture("Maroonbg_ingame.jpeg");
-        //backgroundmaroonImg = new Texture("Mountain.png");
-        backgroundmaroonImg = new Texture("NiceForest1.png");
-        player1healthbarImg = new Texture("HealthBar.png");
-        player2healthbarImg = new Texture("HealthBar.png");
-        player1fuelbarImg = new Texture("FuelBar.png");
-        player2fuelbarImg = new Texture("FuelBar.png");
-        player1aimarrowImg = new Texture("AimArrow.png");
-        player1healthtextImg = new Texture("HealthText.png");
-        player2healthtextImg = new Texture("HealthText.png");
-        player1fueltextImg = new Texture("FuelText.png");
-        player2fueltextImg = new Texture("FuelText.png");
-        pausebuttonImg = new Texture("PauseButton.png");
-        translucentbgImg = new Texture("TranslucentBG.png");
+        backgroundPurpleImg = new Texture("PurpleBackgrounds/Purplebg1.jpeg");
+        backgroundImg = new Texture("Backgrounds/NiceForest1.png");
+        player1HealthBarImg = new Texture("InGameStuff/HealthBar.png");
+        player2HealthBarImg = new Texture("InGameStuff/HealthBar.png");
+        player1FuelBarImg = new Texture("InGameStuff/FuelBar.png");
+        player2FuelBarImg = new Texture("InGameStuff/FuelBar.png");
+        //player1aimarrowImg = new Texture("AimArrow.png");
+        player1HealthTextImg = new Texture("InGameStuff/HealthText.png");
+        player2HealthTextImg = new Texture("InGameStuff/HealthText.png");
+        player1FuelTextImg = new Texture("InGameStuff/FuelText.png");
+        player2FuelTextImg = new Texture("InGameStuff/FuelText.png");
+        pauseButtonImg = new Texture("Buttons/PauseButton.png");
+
 
         //make sprites for the images
         abramSprite = new Sprite(abramImg);
@@ -149,49 +134,49 @@ public class InGameScreen implements Screen {
         logoSprite.setSize(100,100);
         logoSprite.setPosition(xLogo,yLogo);
 
-        backgroundpurpleSprite = new Sprite(backgroundpurpleImg);
-        backgroundpurpleSprite.setSize(3000,1000);
-        backgroundpurpleSprite.setPosition(xPurpleBackground,yPurpleBackground);
+        backgroundPurpleSprite = new Sprite(backgroundPurpleImg);
+        backgroundPurpleSprite.setSize(3000,1000);
+        backgroundPurpleSprite.setPosition(xPurpleBackground,yPurpleBackground);
 
-        backgroundmaroonSprite = new Sprite(backgroundmaroonImg);
-        backgroundmaroonSprite.setSize(600,400);
-        backgroundmaroonSprite.setPosition(xMaroonBackground,yMaroonBackground);
+        backgroundSprite = new Sprite(backgroundImg);
+        backgroundSprite.setSize(600,400);
+        backgroundSprite.setPosition(xMaroonBackground,yMaroonBackground);
 
-        player1healthbarSprite = new Sprite(player1healthbarImg);
-        player1healthbarSprite.setSize(300,30);
-        player1healthbarSprite.setPosition(xPlayer1HealthBar,yPlayer1HealthBar);
+        player1HealthBarSprite = new Sprite(player1HealthBarImg);
+        player1HealthBarSprite.setSize(300,30);
+        player1HealthBarSprite.setPosition(xPlayer1HealthBar,yPlayer1HealthBar);
 
-        player2healthbarSprite = new Sprite(player2healthbarImg);
-        player2healthbarSprite.setSize(300,30);
-        player2healthbarSprite.setPosition(xPlayer2HealthBar,yPlayer2HealthBar);
+        player2HealthBarSprite = new Sprite(player2HealthBarImg);
+        player2HealthBarSprite.setSize(300,30);
+        player2HealthBarSprite.setPosition(xPlayer2HealthBar,yPlayer2HealthBar);
 
-        player1fuelbarSprite = new Sprite(player1fuelbarImg);
-        player1fuelbarSprite.setSize(120,40);
-        player1fuelbarSprite.setPosition(xPlayer1FuelBar,yPlayer1FuelBar);
+        player1FuelBarSprite = new Sprite(player1FuelBarImg);
+        player1FuelBarSprite.setSize(120,40);
+        player1FuelBarSprite.setPosition(xPlayer1FuelBar,yPlayer1FuelBar);
 
-        player2fuelbarSprite = new Sprite(player2fuelbarImg);
-        player2fuelbarSprite.setSize(120,40);
-        player2fuelbarSprite.setPosition(xPlayer2FuelBar,yPlayer2FuelBar);
+        player2FuelBarSprite = new Sprite(player2FuelBarImg);
+        player2FuelBarSprite.setSize(120,40);
+        player2FuelBarSprite.setPosition(xPlayer2FuelBar,yPlayer2FuelBar);
 
-        player1healthtextSprite = new Sprite(player1healthtextImg);
-        player1healthtextSprite.setSize(110,45);
-        player1healthtextSprite.setPosition(xPlayer1HealthText,yPlayer1HealthText);
+        player1HealthTextSprite = new Sprite(player1HealthTextImg);
+        player1HealthTextSprite.setSize(110,45);
+        player1HealthTextSprite.setPosition(xPlayer1HealthText,yPlayer1HealthText);
 
-        player2healthtextSprite = new Sprite(player2healthtextImg);
-        player2healthtextSprite.setSize(100,45);
-        player2healthtextSprite.setPosition(xPlayer2HealthText,yPlayer2HealthText);
+        player2HealthTextSprite = new Sprite(player2HealthTextImg);
+        player2HealthTextSprite.setSize(100,45);
+        player2HealthTextSprite.setPosition(xPlayer2HealthText,yPlayer2HealthText);
 
-        player1fueltextSprite = new Sprite(player1fueltextImg);
-        player1fueltextSprite.setSize(50,35);
-        player1fueltextSprite.setPosition(xPlayer1FuelText,yPlayer1FuelText);
+        player1FuelTextSprite = new Sprite(player1FuelTextImg);
+        player1FuelTextSprite.setSize(50,35);
+        player1FuelTextSprite.setPosition(xPlayer1FuelText,yPlayer1FuelText);
 
-        player2fueltextSprite = new Sprite(player2fueltextImg);
-        player2fueltextSprite.setSize(50,35);
-        player2fueltextSprite.setPosition(xPlayer2FuelText,yPlayer2FuelText);
+        player2FuelTextSprite = new Sprite(player2FuelTextImg);
+        player2FuelTextSprite.setSize(50,35);
+        player2FuelTextSprite.setPosition(xPlayer2FuelText,yPlayer2FuelText);
 
-        pausebuttonSprite = new Sprite(pausebuttonImg);
-        pausebuttonSprite.setSize(40,40);
-        pausebuttonSprite.setPosition(xPauseButton,yPauseButton);
+        pauseButtonSprite = new Sprite(pauseButtonImg);
+        pauseButtonSprite.setSize(40,40);
+        pauseButtonSprite.setPosition(xPauseButton,yPauseButton);
 
     }
 
@@ -209,7 +194,7 @@ public class InGameScreen implements Screen {
         //stage.addActor(new Image(backgroundImg));
         game.batch.begin();
         //game.batch.draw(backgroundpurpleImg, xPurpleBackground, yPurpleBackground);
-        game.batch.draw(backgroundmaroonImg, xMaroonBackground, yMaroonBackground);
+        game.batch.draw(backgroundImg, xMaroonBackground, yMaroonBackground);
         //game.batch.draw(img, x, y);
 
         //game.batch.draw(abramImg, xAbram, yAbram);
@@ -226,16 +211,14 @@ public class InGameScreen implements Screen {
 //        groundSprite6.draw(game.batch);
 
         logoSprite.draw(game.batch);
-        player1healthbarSprite.draw(game.batch);
-        player2healthbarSprite.draw(game.batch);
-        player1fuelbarSprite.draw(game.batch);
-        player2fuelbarSprite.draw(game.batch);
-        player1healthtextSprite.draw(game.batch);
-        player2healthtextSprite.draw(game.batch);
-        player1fueltextSprite.draw(game.batch);
-        player2fueltextSprite.draw(game.batch);
-        pausebuttonSprite.draw(game.batch);
-
+        player1HealthBarSprite.draw(game.batch);
+        player2HealthBarSprite.draw(game.batch);
+        player1FuelBarSprite.draw(game.batch);
+        player2FuelBarSprite.draw(game.batch);
+        player1HealthTextSprite.draw(game.batch);
+        player2HealthTextSprite.draw(game.batch);
+        player1FuelTextSprite.draw(game.batch);
+        player2FuelTextSprite.draw(game.batch);
 
         game.batch.draw(groundImg1, xGround1, yGround1);
         game.batch.draw(groundImg2, xGround2, yGround2);
@@ -244,6 +227,7 @@ public class InGameScreen implements Screen {
         game.batch.draw(groundImg5, xGround5, yGround5);
         game.batch.draw(groundImg6, xGround6, yGround6);
 
+        pauseButtonSprite.draw(game.batch);
 
 //        game.batch.draw(groundImg1, xGround1, yGround1);
 //        game.batch.draw(groundImg2, xGround2, yGround2);
@@ -324,19 +308,18 @@ public class InGameScreen implements Screen {
         groundImg5.dispose();
         groundImg6.dispose();
         logoImg.dispose();
-        backgroundpurpleImg.dispose();
-        backgroundmaroonImg.dispose();
-        player1healthbarImg.dispose();
-        player2healthbarImg.dispose();
-        player1fuelbarImg.dispose();
-        player2fuelbarImg.dispose();
-        player1healthtextImg.dispose();
-        player2healthtextImg.dispose();
-        player1fueltextImg.dispose();
-        player2fueltextImg.dispose();
-        player1aimarrowImg.dispose();
-        translucentbgImg.dispose();
-        pausebuttonImg.dispose();
+        backgroundPurpleImg.dispose();
+        backgroundImg.dispose();
+        player1HealthBarImg.dispose();
+        player2HealthBarImg.dispose();
+        player1FuelBarImg.dispose();
+        player2FuelBarImg.dispose();
+        player1HealthTextImg.dispose();
+        player2HealthTextImg.dispose();
+        player1FuelTextImg.dispose();
+        player2FuelTextImg.dispose();
+        player1AimArrowImg.dispose();
+        pauseButtonImg.dispose();
         batch.dispose();
 
     }
