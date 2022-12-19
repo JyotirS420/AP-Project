@@ -1,18 +1,51 @@
-package gameObjects;
+package Classes;
 
-public class Bullet {
+import com.badlogic.gdx.physics.box2d.*;
+
+public class BulletMine {
+
+    private Body body;
     protected int damage;
     protected int launchPower;
     protected int angle;
     protected int radiusOfImpact;
-    protected Position position;
+    protected Position initialPosition;
+    protected Position finalPosition;
+    private final float PPM = 32.0f;
 
-    public Bullet(int damage, int launchPower, int angle, Position position, int radiusOfImpact) {
-        this.damage = damage;
-        this.launchPower = launchPower;
-        this.angle = angle;
-        this.position = position;
-        this.radiusOfImpact = radiusOfImpact;
+
+    public BulletMine(World world, int x, int y, int width, int height) {
+        createBoxBody(world, x, y, width, height);
+        body.setLinearDamping(20f);
+    }
+    //getters and setters
+
+    public void createBoxBody(World world,int x, int y, int width, int height){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x/PPM, y/PPM);
+        bodyDef.fixedRotation = true;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bodyDef);
+        body.setLinearDamping(20f);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width/2/PPM, height/2/PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+
+        this.body = world.createBody(bodyDef);
+        this.body.createFixture(fixtureDef).setUserData(this);
+
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
     }
 
     public int getDamage() {
@@ -47,20 +80,23 @@ public class Bullet {
         this.radiusOfImpact = radiusOfImpact;
     }
 
-    public Position getPosition() {
-        return position;
+    public Position getInitialPosition() {
+        return initialPosition;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setInitialPosition(Position initialPosition) {
+        this.initialPosition = initialPosition;
     }
-    protected int calculateRadiusOfImpact() {
-        return 0;
-    }
-    protected void shoot() {
 
+    public Position getFinalPosition() {
+        return finalPosition;
     }
-    protected void explode() {
 
+    public void setFinalPosition(Position finalPosition) {
+        this.finalPosition = finalPosition;
+    }
+
+    public float getPPM() {
+        return PPM;
     }
 }
