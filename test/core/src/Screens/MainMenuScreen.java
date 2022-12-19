@@ -27,14 +27,14 @@ public class MainMenuScreen implements Screen {
     int flag = 0;
     private Label outputLabel;
     private Sound bulletSound = Gdx.audio.newSound(Gdx.files.internal("Audio/bulletSound.mp3"));
-    Texture img, abramImg, groundImg1,groundImg2, groundImg3, logoImg, backGroundPurpleImg, backgroundImg, bulletImg, mainMenuImg, sideMenuImg;
+    Texture img, abramImg, groundImg1,groundImg2, groundImg3,groundImg4,groundImg5, logoImg, backGroundPurpleImg, backgroundImg, bulletImg, mainMenuImg, sideMenuImg;
     Texture newGameButtonImg, loadGameButtonImg, quitGameButtonImg;
 
 
-    Sprite abramSprite, groundSprite1, groundSprite2, groundSprite3, logoSprite, backgroundPurpleSprite, backgroundSprite, bulletSprite, mainMenuSprite, sideMenuSprite;
+    Sprite abramSprite, groundSprite1, groundSprite2, groundSprite3,groundSprite4,groundSprite5, logoSprite, backgroundPurpleSprite, backgroundSprite, bulletSprite, mainMenuSprite, sideMenuSprite;
     Sprite newGameButtonSprite, loadGameButtonSprite, quitGameButtonSprite;
 
-    Image abramImage, groundImage1, groundImage2, groundImage3, logoImage, backgroundPurpleImage, backgroundImage, bulletImage, mainMenuImage, sideMenuImage;
+    Image abramImage, groundImage1, groundImage2, groundImage3,groundImage4,groundImage5, logoImage, backgroundPurpleImage, backgroundImage, bulletImage, mainMenuImage, sideMenuImage;
     Image newGameButtonImage, loadGameButtonImage, quitGameButtonImage;
 
     SpriteBatch batch = new SpriteBatch();
@@ -46,70 +46,182 @@ public class MainMenuScreen implements Screen {
     private TextButton.TextButtonStyle textButtonStyle;
     private BitmapFont font;
 
-    private Game game;
-    public MainMenuScreen(Game game) {
+    private final Game game;
+
+    float xAbram = Gdx.graphics.getWidth()-1700; float yAbram = Gdx.graphics.getHeight()/2 - 500;
+    float xGround1 = 0;float yGround1 = -10;
+    float xGround2 = 300;float yGround2 = -10;
+    float xGround3 = 500;float yGround3 = -10;
+    float xGround4 = 700;float yGround4 = -10;
+    float xGround5 = 900;float yGround5 = -10;
+    float xLogo = 370;float yLogo = 600;
+    float xPurpleBackground = 0;float yPurpleBackground = 0;
+    float xMaroonBackground = 0;float yMaroonBackground = 0;
+    float xBullet = 325;float yBullet = 195;
+    float xMainmenu = 1150;float yMainmenu = 0;
+    float xNewgame = 460;float yNewgame = 245;
+    float xLoadgame = 460;float yLoadgame = 145;
+    float xQuitgame = 460;float yQuitgame = 45;
+    float xSkygradient = 1150;float ySkygradient =0;
+    public MainMenuScreen(final Game game) {
         this.game = game;
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-        Button button2 = new TextButton("Text Button",mySkin,"small");
-        float col_width = Gdx.graphics.getWidth()/3;
-        float row_height = Gdx.graphics.getHeight()/3;
-        button2.setSize(col_width,row_height/2);
 
-        float x = col_width; //center button in the middle of the screen
-        float y = Gdx.graphics.getHeight()/2 - row_height/2;
-        button2.setPosition(x,y);
-        button2.addListener(new InputListener(){
+        backgroundImg = new Texture("Backgrounds/M1.jpeg");
+        backgroundImage = new Image(backgroundImg);
+        backgroundImage.setPosition(xMaroonBackground, yMaroonBackground);
+        backgroundImage.setSize(1500, 1400);
+        stage.addActor(backgroundImage);
+
+        logoImg = new Texture("Tank_Stars_Logo_nobg.png");
+        logoImage = new Image(logoImg);
+        logoImage.setPosition(xLogo, yLogo);
+        logoImage.setSize(400, 400);
+        stage.addActor(logoImage);
+
+        sideMenuImg = new Texture("Backgrounds/SideMenu.png");
+        sideMenuImage = new Image(sideMenuImg);
+        sideMenuImage.setPosition(xSkygradient, ySkygradient);
+        sideMenuImage.setSize(750, 1100);
+        stage.addActor(sideMenuImage);
+
+
+
+        final Button newgameButton = new TextButton("New Game",mySkin,"small");
+        //take input
+        Gdx.input.setInputProcessor(stage);
+        float newgamecol_width = Gdx.graphics.getWidth()/6+75;
+        float newgamerow_height = Gdx.graphics.getHeight()/3+200;
+        newgameButton.setSize(newgamecol_width,newgamerow_height/6);
+
+        float newgamex = newgamecol_width+925; //center button in the middle of the screen
+        float newgamey = Gdx.graphics.getHeight()/2 - newgamerow_height/2+250;
+        newgameButton.setPosition(newgamex,newgamey);
+        newgameButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                outputLabel.setText("Press a Button");
+//                outputLabel.setText("Press a Button");
+                game.setScreen(new TankSelectionScreen(game));
 
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                outputLabel.setText("Pressed Text Button");
+//                outputLabel.setText("Pressed Text Button");
+                //change button color to blue
+                newgameButton.setColor(0,0,1,1);
                 return true;
             }
         });
-        stage.addActor(button2);
+        stage.addActor(newgameButton);
+
+        final Button loadgameButton = new TextButton("Load Game",mySkin,"small");
+        float loadgamecol_width = Gdx.graphics.getWidth()/6+75;
+        float loadgamerow_height = Gdx.graphics.getHeight()/3+200;
+        loadgameButton.setSize(loadgamecol_width,loadgamerow_height/6);
+
+        float loadgamex = loadgamecol_width+925; //center button in the middle of the screen
+        float loadgamey = Gdx.graphics.getHeight()/2 - loadgamerow_height/2+50;
+        loadgameButton.setPosition(loadgamex,loadgamey);
+        loadgameButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//                outputLabel.setText("Press a Button");
+                game.setScreen(new TankSelectionScreen(game));
+
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                outputLabel.setText("Pressed Text Button");
+                //change button color to blue
+                loadgameButton.setColor(0,0,1,1);
+                return true;
+            }
+        });
+        stage.addActor(loadgameButton);
+
+        final Button quitgameButton = new TextButton("Quit Game",mySkin,"small");
+        float quitgamecol_width = Gdx.graphics.getWidth()/6+75;
+        float quitgamerow_height = Gdx.graphics.getHeight()/3+200;
+        quitgameButton.setSize(quitgamecol_width,quitgamerow_height/6);
+
+        float quitgamex = quitgamecol_width+925; //center button in the middle of the screen
+        float quitgamey = Gdx.graphics.getHeight()/2 - quitgamerow_height/2-150;
+        quitgameButton.setPosition(quitgamex,quitgamey);
+        quitgameButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//                outputLabel.setText("Press a Button");
+                  Gdx.app.exit();
+
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                outputLabel.setText("Pressed Text Button");
+                //change button color to blue
+                quitgameButton.setColor(0,0,1,1);
+                return true;
+            }
+        });
+        stage.addActor(quitgameButton);
+
+
+
+
+
+
         abramImg = new Texture("Tanks/Abrams_nobg.png");
         abramImage = new Image(abramImg);
-        abramImage.setPosition(Gdx.graphics.getWidth()-550, Gdx.graphics.getHeight()/2 - 200);
-        abramImage.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/2);
+        abramImage.setPosition(xAbram,yAbram);
+        abramImage.setSize(Gdx.graphics.getWidth()/3 + 350, Gdx.graphics.getHeight()/2+350);
         stage.addActor(abramImage);
 
         groundImg1 = new Texture("Ground.jpg");
         groundImage1 = new Image(groundImg1);
         groundImage1.setPosition(xGround1, yGround1);
-        groundImage1.setSize(250, 100);
+        groundImage1.setSize(300, 250);
         stage.addActor(groundImage1);
         groundImg2 = new Texture("Ground.jpg");
         groundImage2 = new Image(groundImg2);
         groundImage2.setPosition(xGround2, yGround2);
-        groundImage2.setSize(250, 100);
+        groundImage2.setSize(300, 250);
         stage.addActor(groundImage2);
         groundImg3 = new Texture("Ground.jpg");
         groundImage3 = new Image(groundImg3);
         groundImage3.setPosition(xGround3, yGround3);
-        groundImage3.setSize(250, 100);
+        groundImage3.setSize(300, 250);
         stage.addActor(groundImage3);
+        groundImg4 = new Texture("Ground.jpg");
+        groundImage4 = new Image(groundImg4);
+        groundImage4.setPosition(xGround4, yGround4);
+        groundImage4.setSize(300, 250);
+        stage.addActor(groundImage4);
+        groundImg5 = new Texture("Ground.jpg");
+        groundImage5 = new Image(groundImg5);
+        groundImage5.setPosition(xGround5, yGround5);
+        groundImage5.setSize(250, 250);
+        stage.addActor(groundImage5);
+
+
+
+
+
+
+
+//        bulletImg = new Texture("Bullet.png");
+//        bulletImage = new Image(bulletImg);
+//        bulletImage.setPosition(xBullet, yBullet);
+//        bulletImage.setSize(100, 100);
+//        stage.addActor(bulletImage);
+
+
+
+
 
 
     }
 
-    float xAbram = 10; float yAbram = 18;
-    float xGround1 = 0;float yGround1 = -10;
-    float xGround2 = 100;float yGround2 = -10;
-    float xGround3 = 200;float yGround3 = -10;
-    float xLogo = 70;float yLogo = 275;
-    float xPurpleBackground = 0;float yPurpleBackground = 0;
-    float xMaroonBackground = -100;float yMaroonBackground = 0;
-    float xBullet = 325;float yBullet = 195;
-    float xMainmenu = 450;float yMainmenu = 335;
-    float xNewgame = 460;float yNewgame = 245;
-    float xLoadgame = 460;float yLoadgame = 145;
-    float xQuitgame = 460;float yQuitgame = 45;
-    float xSkygradient = 400;float ySkygradient =0;
+
 
 
     public void create () {
@@ -365,7 +477,7 @@ public class MainMenuScreen implements Screen {
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //ScreenUtils.clear(0, 0, 0, 1);
-        stage.act();
+        stage.act(delta);
         stage.draw();
 
         //stage.addActor(new Image(backgroundImg));
@@ -472,5 +584,6 @@ public class MainMenuScreen implements Screen {
 //        //stage.dispose();
 //        batch.dispose();
         stage.dispose();
+
     }
 }
