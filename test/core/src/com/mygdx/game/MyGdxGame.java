@@ -5,10 +5,16 @@ import Screens.MainMenuScreen;
 import Screens.PauseInGameScreen;
 import Screens.TankSelectionScreen;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MyGdxGame extends Game {
 	public SpriteBatch batch;
@@ -70,3 +76,4 @@ public class MyGdxGame extends Game {
 		batch.dispose();
 	}
 }
+
