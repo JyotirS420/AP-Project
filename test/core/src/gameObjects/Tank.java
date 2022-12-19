@@ -1,98 +1,98 @@
-package gameObjects;
+package Classes;
+
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.bullet.Bullet;
 
 public class Tank {
+    private Body body;
     protected int health;
-    protected float fuel;
-    protected static int speed;
-    protected Position position;
-    protected boolean isDead;
-    protected static int maxLaunchPower;
-    protected int whichSurpriseBox;
+    private Position position;
+    protected int speed;
+    private BulletMine bullet;
+    private boolean isAlive;
+    private int maxPowerLaunch;
+    private boolean isSurpriseBoxActive;
+    private final float PPM = 32.0f;
 
-    public Tank(Position position) {
+
+
+    public Tank(Body body) {
+        this.body = body;
         this.health = 100;
-        this.fuel = 100;
-        this.position = position;
-        this.isDead = false;
-    }
+        this.speed = 10;
+        this.isAlive = true;
+        this.maxPowerLaunch = 100;
+        this.isSurpriseBoxActive = false;
+        this.body.setLinearDamping(0.5f);
 
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public float getFuel() {
-        return fuel;
-    }
-
-    public void setFuel(float fuel) {
-        this.fuel = fuel;
-    }
-
-    public static int getSpeed() {
-        return speed;
-    }
-
-    public static void setSpeed(int speed) {
-        Tank.speed = speed;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public boolean isDead() {
-        return isDead;
-    }
-
-    public void setDead(boolean dead) {
-        isDead = dead;
-    }
-
-    public static int getMaxLaunchPower() {
-        return maxLaunchPower;
-    }
-
-    public static void setMaxLaunchPower(int maxLaunchPower) {
-        Tank.maxLaunchPower = maxLaunchPower;
-    }
-
-    protected int getWhichSurpriseBox() {
-        return whichSurpriseBox;
-    }
-
-    public void setWhichSurpriseBox(int SurpriseBox) {
-        this.whichSurpriseBox = SurpriseBox;
-    }
-    protected void moveLeft() {
+        //set userdata
+        this.body.setUserData(this);
 
     }
-    protected void moveRight() {
+    public Tank(World world, int x, int y, int width, int height) {
+        createBoxBody(world, x, y, width, height);
+        body.setLinearDamping(20f);
+    }
+    //getters and setters
+
+    public void createBoxBody(World world,int x, int y, int width, int height){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x/PPM, y/PPM);
+        bodyDef.fixedRotation = true;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bodyDef);
+        body.setLinearDamping(20f);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width/2/PPM, height/2/PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+
+        this.body = world.createBody(bodyDef);
+        this.body.createFixture(fixtureDef).setUserData(this);
 
     }
-    protected void aimUp(){
 
+    public void hit(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            isAlive = false;
+        }
+        System.out.println("Tank health: " + health);
     }
-    protected void aimDown(){
 
-    }
-    protected void powerIncrease(){
+    public Body getBody() {return body;}
+    public void setBody(Body body) {this.body = body;}
+    public int getHealth() {return health;}
+    public void setHealth(int health) {this.health = health;}
+    public Position getPosition() {return position;}
+    public void setPosition(Position position) {this.position = position;}
+    public int getSpeed() {return speed;}
+    public void setSpeed(int speed) {this.speed = speed;}
+    public BulletMine getBullet() {return bullet;}
+    public void setBullet(BulletMine bullet) {this.bullet = bullet;}
+    public boolean isAlive() {return isAlive;}
+    public void setAlive(boolean alive) {isAlive = alive;}
+    public int getMaxPowerLaunch() {return maxPowerLaunch;}
 
-    }
-    protected void powerDecrease(){
+    public boolean isSurpriseBoxActive() {return isSurpriseBoxActive;}
+    public void setSurpriseBoxActive(boolean surpriseBoxActive) {isSurpriseBoxActive = surpriseBoxActive;}
 
-    }
-    protected boolean isOutOfFuel(){
-        return fuel == 0;
-    }
-    protected void shootBullet(){
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
