@@ -1,19 +1,20 @@
-package com.mygdx.game;
+package Screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.MyGdxGame;
+
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import gameObjects.Tank;
+import Classes.*;
+
 
 public class InGameScene implements Screen {
     private boolean DEBUG = false;
@@ -25,39 +26,92 @@ public class InGameScene implements Screen {
     private Stage stage;
     private MyGdxGame game;
     private SpriteBatch batch;
-    private Texture tank1Texture,tank2Texture, backgroundTexture, groundTexture1,groundTexture2,groundTexture3,groundTexture4,groundTexture5,groundTexture6 ;
-    private Image tank1Image, tank2Image, backgroundImage, groundImage1,groundImage2,groundImage3,groundImage4,groundImage5,groundImage6;
+    private Texture tank1Texture,tank2Texture,bullet1Texture,bullet2Texture;
+    private Texture backgroundTexture, groundTexture1,groundTexture2;
+    private Image tank1Image, tank2Image,bullet1Image, bullet2Image;
+    private Image backgroundImage, groundImage1,groundImage2;
+
     private OrthographicCamera camera;
 
     private World world;
-    private Body player,ground;
+    private Body player1,player2, bullet1, bullet2;
+    private Body ground,leftWall,rightWall;
     private Tank tank1,tank2;
-    private Body platform;
 
 
-    public InGameScene(MyGdxGame game) {
+    public InGameScene(MyGdxGame game, String typetank1, String typetank2) {
         this.game = game;
+        //world and debugRenderer
+        world = new World(new Vector2(0, -9.81f), false);
+        debugRenderer = new Box2DDebugRenderer();
         stage = new Stage(new ScreenViewport());
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
+
+
+        //camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false,  w/SCALE, h/SCALE);
 
-        world = new World(new Vector2(0, -9.81f), false);
-        debugRenderer = new Box2DDebugRenderer();
 
-        player = createBox(-100,-100,54,28,false);
-        tank1 = new Tank(player);
-//        platform = createBox(50,50,64,32,false);
+
+        //players and tanks
+        player1 = createBox(-400,-100,54,28,false);
+
+        player2 = createBox(400,100,54,28,false);
+
+        bullet1 = createBox(-400,-400,10,10,false);
+
+//        bullet2 = createBox(400,100,10,10,false);
+
         //create ground
-        ground = createBox(0, -167, 1280, 32, true);
+        ground = createBox(0, -202, 1280, 100, true);
+        //add friction to ground
+        ground.getFixtureList().get(0).setFriction(0.5f);
 
-
+        //create left wall and right wall
+        leftWall = createBox(-470, 0, 32, 720, true);
+        rightWall = createBox(470, 0, 32, 720, true);
 
 
 
         batch = new SpriteBatch();
-        tank1Texture = new Texture("Tanks/Abrams_nobg_ingame.png");
+
+        //depending on the type of tank, the texture is loaded
+        if(typetank1.equals("Abrams")){
+            tank1Texture = new Texture("Tanks/Abrams_nobg.png");
+        }
+        else if(typetank1.equals("Coalition")){
+            tank1Texture = new Texture("Tanks/Coalition_nobg.png");
+        }
+        else{
+            tank1Texture = new Texture("Tanks/Spectre_nobg.png");
+        }
+        if(typetank2.equals("Abrams")){
+            tank2Texture = new Texture("Tanks/Abrams_nobg_rev.png");
+        }
+        else if(typetank2.equals("Coalition")){
+            tank2Texture = new Texture("Tanks/Coalition_nobg_rev.png");
+        }
+        else{
+            tank2Texture = new Texture("Tanks/Spectre_rev_nobg.png");
+        }
+
+//        tank1Texture = new Texture("Tanks/Abrams_nobg.png");
+//        tank2Texture = new Texture("Tanks/Coalition_nobg_rev.png");
+        bullet1Texture = new Texture("Bullets/bullet1.png");
+//        bullet2Texture = new Texture("Tanks/bullet.png");
+        //make tank1Texture smaller
+        tank1Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        tank2Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        tank1Image = new Image(tank1Texture);
+        tank2Image = new Image(tank2Texture);
+        bullet1Image = new Image(bullet1Texture);
+//        bullet2Image = new Image(bullet2Texture);
+        tank1Image.setSize(60,60);
+        tank2Image.setSize(60,60);
+        bullet1Image.setSize(10,10);
+//        bullet2Image.setSize(20,20);
 
         backgroundTexture = new Texture("Backgrounds/NiceForest1.png");
         backgroundImage = new Image(backgroundTexture);
@@ -67,34 +121,18 @@ public class InGameScene implements Screen {
 
         groundTexture1 = new Texture("Ground.jpg");
         groundImage1 = new Image(groundTexture1);
-        groundImage1.setSize(300, 200);
+        groundImage1.setSize(900, 200);
         groundImage1.setPosition(0, 0);
         stage.addActor(groundImage1);
         groundTexture2 = new Texture("Ground.jpg");
         groundImage2 = new Image(groundTexture2);
-        groundImage2.setSize(300, 200);
-        groundImage2.setPosition(300, 0);
+        groundImage2.setSize(900, 200);
+        groundImage2.setPosition(900, 0);
         stage.addActor(groundImage2);
-        groundTexture3 = new Texture("Ground.jpg");
-        groundImage3 = new Image(groundTexture3);
-        groundImage3.setSize(300, 200);
-        groundImage3.setPosition(600, 0);
-        stage.addActor(groundImage3);
-        groundTexture4 = new Texture("Ground.jpg");
-        groundImage4 = new Image(groundTexture4);
-        groundImage4.setSize(300, 200);
-        groundImage4.setPosition(900, 0);
-        stage.addActor(groundImage4);
-        groundTexture5 = new Texture("Ground.jpg");
-        groundImage5 = new Image(groundTexture5);
-        groundImage5.setSize(300, 200);
-        groundImage5.setPosition(1200, 0);
-        stage.addActor(groundImage5);
-        groundTexture6 = new Texture("Ground.jpg");
-        groundImage6 = new Image(groundTexture6);
-        groundImage6.setSize(300, 200);
-        groundImage6.setPosition(1500, 0);
-        stage.addActor(groundImage6);
+
+
+
+
     }
 
     private Body createBody(ChainShape groundShape, int i, int i1, boolean b) {
@@ -118,10 +156,33 @@ public class InGameScene implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //stage for static images
         stage.act(delta);
         stage.draw();
+
+        //batch for dynamic images
         batch.begin();
-        batch.draw(tank1Texture, player.getPosition().x * PPM - 28, player.getPosition().y * PPM - 28);
+//        batch.draw(tank1Texture, player1.getPosition().x * PPM - 28, player1.getPosition().y * PPM - 28);
+//        batch.draw(tank2Texture, player2.getPosition().x * PPM - 28, player2.getPosition().y * PPM - 28);
+
+
+        //draw tank1Image
+        tank1Image.setPosition(player1.getPosition().x * PPM - 28, player1.getPosition().y * PPM - 28);
+        tank1Image.draw(batch, 1);
+        //draw tank2Image
+        tank2Image.setPosition(player2.getPosition().x * PPM - 28, player2.getPosition().y * PPM - 28);
+        tank2Image.draw(batch, 1);
+
+        //draw bullet1Image
+        bullet1Image.setPosition(bullet1.getPosition().x * PPM - 5, bullet1.getPosition().y * PPM - 5);
+        bullet1Image.draw(batch, 1);
+
+//        //if bullet1 hits the ground, destroy it
+//        if(bullet1.getPosition().y < -180|| bullet1.getPosition().x < -450 ||bullet1.getPosition().x > 450){
+//            world.destroyBody(bullet1);
+//        }
+
         batch.end();
         debugRenderer.render(world, camera.combined.scl(PPM));
     }
@@ -140,26 +201,25 @@ public class InGameScene implements Screen {
     }
 
     public void inputUpdate(float delta) {
-        int horizontalForce = 0;
-        int verticalForce = 0;
+        float horizontalForce = 0F;
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             horizontalForce -= 1;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             horizontalForce += 1;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            verticalForce -= 1;
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            //change bullet1's position to corner of tank1's turret
+            bullet1.setTransform(player1.getPosition().x + 1, player1.getPosition().y + 1, 0);
+            //shoot bullet1 in direction of tank1's turret
+            bullet1.applyLinearImpulse(0.2F, 0.2F, bullet1.getPosition().x, bullet1.getPosition().y, true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            verticalForce += 1;
-            player.applyForceToCenter(0, -300, false);
-        }
-        player.setLinearVelocity(horizontalForce * 5, verticalForce * 5);
+        //apply force to player1
+        player1.applyForceToCenter(horizontalForce * 10, 0, true);
     }
 
     public void cameraUpdate(float delta) {
-        Vector2 position = ground.getPosition();
+        //fixing the camera
         camera.position.set(0, 0, 0);
         camera.update();
     }
@@ -210,4 +270,3 @@ public class InGameScene implements Screen {
     }
 
 }
-
