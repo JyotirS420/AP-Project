@@ -37,13 +37,15 @@ public class InGameScene implements Screen {
     private Body player1,player2, bullet1, bullet2;
     private Body ground,leftWall,rightWall;
     private Tank tank1,tank2;
+    private BulletMine bulletMine1,bulletMine2;
 
 
     public InGameScene(MyGdxGame game, String typetank1, String typetank2) {
         this.game = game;
         //world and debugRenderer
-        world = new World(new Vector2(0, -9.81f), false);
+        world = new World(new Vector2(0, -98.1f), false);
         debugRenderer = new Box2DDebugRenderer();
+        this.world.setContactListener(new MyContactListener());
         stage = new Stage(new ScreenViewport());
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -56,13 +58,14 @@ public class InGameScene implements Screen {
 
 
         //players and tanks
-        player1 = createBox(-400,-100,54,28,false);
+        //player1 = createBox(-400,-100,54,28,false);
+        tank1 = new Tank(world,-400,-100,54,28);
 
-        player2 = createBox(400,100,54,28,false);
+        //player2 = createBox(400,100,54,28,false);
+        tank2 = new Tank(world,400,100,54,28);
+        bulletMine1 = new BulletMine(world,-400,-400,10,10);
+//        bullet1 = createBox(-400,-400,10,10,false);
 
-        bullet1 = createBox(-400,-400,10,10,false);
-
-//        bullet2 = createBox(400,100,10,10,false);
 
         //create ground
         ground = createBox(0, -202, 1280, 100, true);
@@ -101,7 +104,8 @@ public class InGameScene implements Screen {
 //        tank2Texture = new Texture("Tanks/Coalition_nobg_rev.png");
         bullet1Texture = new Texture("Bullets/bullet1.png");
 //        bullet2Texture = new Texture("Tanks/bullet.png");
-        //make tank1Texture smaller
+
+
         tank1Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         tank2Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         tank1Image = new Image(tank1Texture);
@@ -168,14 +172,14 @@ public class InGameScene implements Screen {
 
 
         //draw tank1Image
-        tank1Image.setPosition(player1.getPosition().x * PPM - 28, player1.getPosition().y * PPM - 28);
+        tank1Image.setPosition(tank1.getBody().getPosition().x * PPM - 28, tank1.getBody().getPosition().y * PPM - 28);
         tank1Image.draw(batch, 1);
         //draw tank2Image
-        tank2Image.setPosition(player2.getPosition().x * PPM - 28, player2.getPosition().y * PPM - 28);
+        tank2Image.setPosition(tank2.getBody().getPosition().x * PPM - 28, tank2.getBody().getPosition().y * PPM - 28);
         tank2Image.draw(batch, 1);
 
         //draw bullet1Image
-        bullet1Image.setPosition(bullet1.getPosition().x * PPM - 5, bullet1.getPosition().y * PPM - 5);
+        bullet1Image.setPosition(bulletMine1.getBody().getPosition().x * PPM - 5, bulletMine1.getBody().getPosition().y * PPM - 5);
         bullet1Image.draw(batch, 1);
 
 //        //if bullet1 hits the ground, destroy it
@@ -210,12 +214,19 @@ public class InGameScene implements Screen {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             //change bullet1's position to corner of tank1's turret
-            bullet1.setTransform(player1.getPosition().x + 1, player1.getPosition().y + 1, 0);
-            //shoot bullet1 in direction of tank1's turret
-            bullet1.applyLinearImpulse(0.2F, 0.2F, bullet1.getPosition().x, bullet1.getPosition().y, true);
+            bulletMine1.getBody().setTransform(tank1.getBody().getPosition().x + 1, tank1.getBody().getPosition().y + 1, 0);
+            //shoot bullet1 in the direction of tank1's turret along a parabola
+            bulletMine1.getBody().applyLinearImpulse(20F, 20F, bulletMine1.getBody().getPosition().x, bulletMine1.getBody().getPosition().y, true);
+
         }
         //apply force to player1
-        player1.applyForceToCenter(horizontalForce * 10, 0, true);
+        tank1.getBody().applyForceToCenter(horizontalForce * 100, 0, true);
+
+        //if bullet hits the ground, destroy it
+        if(bulletMine1.getBody().getPosition().y < -180|| bulletMine1.getBody().getPosition().x < -450 ||bulletMine1.getBody().getPosition().x > 450){
+            world.destroyBody(bulletMine1.getBody());
+        }
+
     }
 
     public void cameraUpdate(float delta) {
