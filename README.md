@@ -1,3 +1,5 @@
 # AP Project
 
-Main repository: [Link](https://github.com/JyotirS420/Tank-Stars)
+**This repository has been discontinued** 
+
+New repository: [Link](https://github.com/JyotirS420/Tank-Stars)
